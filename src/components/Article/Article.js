@@ -1,38 +1,54 @@
 import React from "react";
 import { Avatar } from "antd";
-import avtr from "./avtr.jpeg";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+// import avtr from "./avtr.jpeg";
 import classes from "./Article.module.scss";
 
-function Article() {
+const Article = ({ article }) => {
+  const date = new Date(article.createdAt);
+  const [day, year] = [date.getDate(), date.getFullYear()];
+  const month = date.toLocaleString("en", { month: "long" });
+
   return (
     <div className={classes.container}>
       <div className={classes.article}>
         <header className={classes.header}>
-          <a href="/" className={classes.title}>
-            Some article title
-          </a>
+          <Link to={`/details/${article.slug}`} className={classes.title}>
+            {article.title}
+          </Link>
           <i className="fa fa-heart-o" />
-          <p>12</p>
+          <p>{article.favoritesCount}</p>
         </header>
         <div className={classes.tags}>
-          <button type="button">Tag1</button>
-          <button type="button">SomeTag</button>
+          {article.tagList.map((tag, inx) => {
+            if (tag.length) {
+              return (
+                <button key={`${tag}${inx}`} type="button">
+                  {tag}
+                </button>
+              );
+            }
+            return "";
+          })}
         </div>
-        <p className={classes.text}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur
-          dolor atque velit impedit ratione commodi nulla a omnis laudantium
-          cupiditate?
-        </p>
+        <p className={classes.text}>{article.description}</p>
       </div>
       <div className={classes.avatar}>
         <div className={classes.info}>
-          <div className={classes.name}>John Doe</div>
-          <div className={classes.date}>March 5, 2020 </div>
+          <div className={classes.name}>{article.author.username}</div>
+          <div className={classes.date}>{`${month} ${day}, ${year}`} </div>
         </div>
-        <Avatar size={46} src={avtr} />
+        <Avatar className={classes.img} size={46} src={article.author.image} />
       </div>
     </div>
   );
-}
+};
 
+Article.defaultProps = {
+  article: {},
+};
+Article.propTypes = {
+  article: PropTypes.object,
+};
 export default Article;
