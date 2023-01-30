@@ -21,6 +21,8 @@
     "react/forbid-prop-types": "off",
     "react/no-array-index-key": "off",
     "react/state-in-constructor": "off",
-    "prettier/prettier": ["error", { "endOfLine": "auto" }]
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "no-unneeded-ternary": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   }
 }
