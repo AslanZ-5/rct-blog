@@ -31,6 +31,7 @@ const initialState = {
   totalArticles: 0,
   currentPage: 1,
   loading: true,
+  detailLoading: true,
   articleDetails: {},
   hasError: false,
 };
@@ -54,21 +55,21 @@ const articlesSlice = createSlice({
       state.loading = false;
       state.articles = payload.articles;
       state.totalArticles = payload.articlesCount;
-      console.log(payload.articles);
+      // console.log(payload.articles);
     },
     [getArticles.rejected]: (state) => {
       state.loading = false;
     },
     [getArticleDetails.pending]: (state) => {
-      state.loading = true;
+      state.detailLoading = true;
     },
     [getArticleDetails.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      console.log("3333", payload);
+      state.detailLoading = false;
+      // console.log("3333", payload);
       state.articleDetails = payload.article;
     },
     [getArticleDetails.rejected]: (state) => {
-      state.loading = false;
+      state.detailLoading = false;
       state.hasError = true;
     },
   },

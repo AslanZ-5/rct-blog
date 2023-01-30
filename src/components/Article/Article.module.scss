@@ -3,6 +3,7 @@
   margin: 40px;
   border-radius: 5px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
 }
 .article {
   width: 70%;
@@ -16,6 +17,7 @@
   font-weight: 400;
   line-height: 28px;
   margin-right: 8px;
+  word-break: break-all;
 }
 .header i {
   padding: 5px;
@@ -63,6 +65,9 @@
   font-size: 12px;
   line-height: 22px;
   color: rgba(0, 0, 0, 0.5);
+}
+.text {
+  word-break: break-all;
 }
 .img {
   min-width: 46px;

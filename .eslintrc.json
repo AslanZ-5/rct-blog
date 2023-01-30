@@ -20,6 +20,7 @@
     ],
     "react/forbid-prop-types": "off",
     "react/no-array-index-key": "off",
-    "react/state-in-constructor": "off"
+    "react/state-in-constructor": "off",
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
   }
 }

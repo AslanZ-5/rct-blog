@@ -4,11 +4,10 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 // import avtr from "./avtr.jpeg";
 import classes from "./Article.module.scss";
+import formataDate from "../../helper/formatDate";
 
 const Article = ({ article }) => {
-  const date = new Date(article.createdAt);
-  const [day, year] = [date.getDate(), date.getFullYear()];
-  const month = date.toLocaleString("en", { month: "long" });
+  const [day, month, year] = formataDate(article.createdAt);
 
   return (
     <div className={classes.container}>
