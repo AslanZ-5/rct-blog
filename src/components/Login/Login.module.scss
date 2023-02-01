@@ -76,6 +76,22 @@
   line-height: 24px;
   border-radius: 4px;
 }
+.instructions {
+  border-radius: 0.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  background: #e5e5e5;
+  color: gray;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
 .offscreen {
   position: absolute;
   left: -9999px;

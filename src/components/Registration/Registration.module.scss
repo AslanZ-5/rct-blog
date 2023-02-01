@@ -81,10 +81,13 @@
 }
 
 .instructions {
-  font-size: 0.75rem;
   border-radius: 0.5rem;
-  background: #000;
-  color: #fff;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  background: #e5e5e5;
+  color: gray;
   padding: 0.25rem;
   position: relative;
   bottom: -10px;

@@ -34,7 +34,9 @@ const Login = () => {
           id="email"
           autoComplete="off"
         />
-        {errors.Email?.message && <p>{errors.Email?.message}</p>}
+        {errors.Email?.message && (
+          <p className={classes.instructions}>{errors.Email?.message}</p>
+        )}
 
         <label className={classes.logLab} htmlFor="password">
           Password
@@ -46,7 +48,9 @@ const Login = () => {
           type="password"
           id="password"
         />
-        {errors.Password?.message && <p>{errors.Password?.message}</p>}
+        {errors.Password?.message && (
+          <p className={classes.instructions}>{errors.Password?.message}</p>
+        )}
         <button className={classes.logBtn} type="submit">
           Sign In
         </button>
