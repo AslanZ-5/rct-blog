@@ -9,7 +9,7 @@ const Login = () => {
     handleSubmit,
     // watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "all" });
   const handleOnSubmit = (data) => {
     console.log(data);
   };

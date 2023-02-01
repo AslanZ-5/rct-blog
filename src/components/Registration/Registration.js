@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import {
   faCheck,
   faTimes,
@@ -15,6 +16,8 @@ const PWD_REGEX = /.{6,60}/;
 
 const Registration = () => {
   const [isAgreed, setIsAgreed] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [regError, setRegError] = useState();
   const {
     register,
     handleSubmit,
@@ -33,11 +36,58 @@ const Registration = () => {
   };
   const handleOnSubmit = (data) => {
     console.log(data);
+    fetch("https://blog.kata.academy/api/users", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: {
+          username: data.Username,
+          email: data.Email,
+          password: data.Password,
+        },
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.user) {
+          setSuccess(true);
+        } else {
+          setRegError(res.errors);
+        }
+      });
   };
+  if (success) {
+    return (
+      <Navigate
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+  }
+  let regErrors;
+  if (regError) {
+    regErrors = Object.entries(regError);
+  }
+
   return (
     <section className={classes.container}>
       <h1 className={classes.header}>Create new account</h1>
       <form className={classes.regForm} onSubmit={handleSubmit(handleOnSubmit)}>
+        {regErrors && (
+          <ul>
+            {regErrors.map((error) => {
+              return (
+                <li
+                  key={`${error[0]}-${error[1]}`}
+                >{`${error[0]} ${error[1]}`}</li>
+              );
+            })}
+          </ul>
+        )}
+
         <label className={classes.regLabel} htmlFor="username">
           Username
           <FontAwesomeIcon
