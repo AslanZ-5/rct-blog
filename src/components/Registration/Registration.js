@@ -8,10 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import classes from "./Registration.module.scss";
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USER_REGEX = /.{3,20}/;
+const PWD_REGEX = /.{6,60}/;
+
 const Registration = () => {
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const USER_REGEX = /.{3,20}/;
-  const PWD_REGEX = /.{6,60}/;
   const userRef = useRef();
   const errRef = useRef();
 
@@ -123,7 +124,6 @@ const Registration = () => {
           type="text"
           id="email"
           placeholder="Email address"
-          ref={userRef}
           autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
           value={email}

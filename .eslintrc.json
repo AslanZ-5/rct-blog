@@ -23,6 +23,7 @@
     "react/state-in-constructor": "off",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "no-unneeded-ternary": "off",
-    "jsx-a11y/label-has-associated-control": "off"
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

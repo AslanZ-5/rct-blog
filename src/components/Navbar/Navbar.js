@@ -9,15 +9,15 @@ const Navbar = () => {
       </Link>
 
       <div className=" ml-auto">
-        <button
+        <Link
+          to="login/"
           className="btn btn-outline-secondary my-1 my-sm-0 mr-1"
-          type="submit"
         >
           Sign In
-        </button>
-        <button className="btn btn-outline-success my-1 my-sm-0" type="submit">
+        </Link>
+        <Link to="sign-up/" className="btn btn-outline-success my-1 my-sm-0">
           Sign Up
-        </button>
+        </Link>
       </div>
     </nav>
   );
