@@ -1,24 +1,71 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { useIsAuthenticated, useSignOut, useAuthUser } from "react-auth-kit";
+import { clearUser, addUser } from "../../features/profile/profileSlice";
+import classes from "./Navbar.module.scss";
 
 const Navbar = () => {
+  const isAuthenticated = useIsAuthenticated()();
+  const signOut = useSignOut();
+  const dispatch = useDispatch();
+  const auth = useAuthUser();
+  const { user } = useSelector((state) => state.profile);
+  console.log(isAuthenticated);
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios("https://blog.kata.academy/api/user", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${Cookies.get("_auth")}` },
+        });
+        dispatch(addUser(response.data.user));
+        console.log(response);
+      } catch (err) {
+        console.log("dd", err);
+      }
+    };
+    if (isAuthenticated) {
+      getUser();
+    }
+  }, [dispatch]);
+  console.log(user);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
         Navbar
       </Link>
-
-      <div className=" ml-auto">
-        <Link
-          to="login/"
-          className="btn btn-outline-secondary my-1 my-sm-0 mr-1"
+      {isAuthenticated ? (
+        <button
+          className="btn btn-outline-secondary my-1 my-sm-0 ml-auto"
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            signOut();
+            dispatch(clearUser());
+          }}
         >
-          Sign In
-        </Link>
-        <Link to="sign-up/" className="btn btn-outline-success my-1 my-sm-0">
-          Sign Up
-        </Link>
-      </div>
+          logout
+        </button>
+      ) : (
+        <div className=" ml-auto">
+          <Link
+            to="sign-in/"
+            className="btn btn-outline-secondary my-1 my-sm-0 mr-1"
+          >
+            Sign In
+          </Link>
+          <Link to="sign-up/" className="btn btn-outline-success my-1 my-sm-0">
+            Sign Up
+          </Link>
+        </div>
+      )}
+
+      <Link to="/profile" className={classes.prof}>
+        {auth()}
+      </Link>
     </nav>
   );
 };

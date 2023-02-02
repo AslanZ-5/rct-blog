@@ -1,18 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { useSignIn } from "react-auth-kit";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
 import classes from "./Login.module.scss";
 
 const Login = () => {
+  const [success, setSuccess] = useState(false);
+  const signIn = useSignIn();
   const {
     register,
     handleSubmit,
     // watch,
     formState: { errors },
   } = useForm({ mode: "all" });
-  const handleOnSubmit = (data) => {
-    console.log(data);
+  const handleOnSubmit = async (data) => {
+    console.log("ddddaaattaa", data);
+    try {
+      const response = await axios.post(
+        "https://blog.kata.academy/api/users/login",
+        {
+          user: {
+            email: data.Email,
+            password: data.Password,
+          },
+        }
+      );
+
+      signIn({
+        token: response.data.user.token,
+        expiresIn: "500",
+        tokenType: "Bearer",
+        authState: response.data.user.username,
+      });
+      setSuccess(true);
+    } catch (err) {
+      console.log(err);
+    }
   };
+  if (success) {
+    return (
+      <Navigate
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
   return (
     <section className={classes.logSec}>
       <h1 className={classes.logHeader}>Sign In</h1>

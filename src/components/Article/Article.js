@@ -21,7 +21,7 @@ const Article = ({ article }) => {
         </header>
         <div className={classes.tags}>
           {article.tagList.map((tag, inx) => {
-            if (tag.length) {
+            if (tag?.length) {
               return (
                 <button key={`${tag}${inx}`} type="button">
                   {tag}

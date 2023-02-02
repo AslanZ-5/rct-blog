@@ -5,6 +5,7 @@ import ArticleDetails from "../ArticleDetails/ArticleDetails";
 import Navbar from "../Navbar";
 import Login from "../Login";
 import Registration from "../Registration";
+import Profile from "../Profile";
 import classes from "./App.module.scss";
 
 const App = () => {
@@ -16,7 +17,8 @@ const App = () => {
           <Route path="/" element={<ArticleList />} />
           <Route path="/details/:slug" element={<ArticleDetails />} />
           <Route path="/sign-up" element={<Registration />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/sign-in" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </div>

@@ -35,9 +35,8 @@ const Registration = () => {
     setIsAgreed(checked);
   };
   const handleOnSubmit = (data) => {
-    console.log(data);
     fetch("https://blog.kata.academy/api/users", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -62,7 +61,7 @@ const Registration = () => {
     return (
       <Navigate
         to={{
-          pathname: "/login",
+          pathname: "/sign-in",
         }}
       />
     );
