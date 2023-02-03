@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  margin: 20px auto 30px auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0px 22px 106px rgba(0, 0, 0, 0.07),
+    0px 9.19107px 44.2843px rgba(0, 0, 0, 0.0503198),
+    0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275),
+    0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035),
+    0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725),
+    0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
+  border-radius: 6px;
+}
+.header {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: #262626;
+}
+
+.regForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+}
+
+.regInput[type="text"],
+.regInput[type="password"] {
+  font-size: 22px;
+  padding: 0.25rem;
+  border-radius: 4px;
+}
+.regInput::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #bfbfbf;
+  padding-left: 10px;
+}
+.regInput {
+  border: 1px solid #d9d9d9;
+}
+.regLabel,
+.regBtn {
+  margin-top: 1rem;
+}
+.regBtn:disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.regBtn {
+  width: 100%;
+  height: 40px;
+  padding: 0.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  background: #1890ff;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.instructions {
+  border-radius: 0.5rem;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  background: #e5e5e5;
+  color: gray;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.line {
+  display: inline-block;
+  margin-left: 10px;
+}
+.agreement {
+  display: flex;
+  margin-top: 15px;
+}
+.checkBox {
+  margin-right: 16px;
+}

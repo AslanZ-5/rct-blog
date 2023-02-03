@@ -1,0 +1,69 @@
+.container {
+  width: 60%;
+  text-align: center;
+  margin: 40px auto 0 auto;
+  background-color: #fff;
+}
+.header {
+  padding-top: 48px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: #262626;
+}
+.createForm {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+.artLab {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  color: #262626;
+  margin-top: 21px;
+}
+.artInput {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 22px;
+  padding: 0.25rem;
+}
+.artInput::placeholder {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #bfbfbf;
+}
+.tagsInput {
+  padding: 20px 0;
+}
+textarea.artInput {
+  height: 168px;
+}
+.artBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 4px;
+  width: 319px;
+  height: 40px;
+  background: #1890ff;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  border: none;
+  color: #fff;
+}

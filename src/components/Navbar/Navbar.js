@@ -1,19 +1,21 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { Avatar } from "antd";
 import { useIsAuthenticated, useSignOut, useAuthUser } from "react-auth-kit";
 import { clearUser, addUser } from "../../features/profile/profileSlice";
 import classes from "./Navbar.module.scss";
+import img from "./defaultAvatar.png";
 
 const Navbar = () => {
   const isAuthenticated = useIsAuthenticated()();
   const signOut = useSignOut();
   const dispatch = useDispatch();
-  const auth = useAuthUser();
-  const { user } = useSelector((state) => state.profile);
-  console.log(isAuthenticated);
+  // const { username, image } = useAuthUser()();
+  const auth = useAuthUser()();
+  console.log(auth);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -22,7 +24,6 @@ const Navbar = () => {
           headers: { Authorization: `Bearer ${Cookies.get("_auth")}` },
         });
         dispatch(addUser(response.data.user));
-        console.log(response);
       } catch (err) {
         console.log("dd", err);
       }
@@ -31,15 +32,19 @@ const Navbar = () => {
       getUser();
     }
   }, [dispatch]);
-  console.log(user);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link className="navbar-brand" to="/">
         Navbar
       </Link>
+      {isAuthenticated && (
+        <Link to="/new-article" className="btn btn-outline-success ml-auto">
+          Create Article
+        </Link>
+      )}
       {isAuthenticated ? (
         <button
-          className="btn btn-outline-secondary my-1 my-sm-0 ml-auto"
+          className="btn btn-outline-secondary my-1 my-sm-0 ml-2"
           type="button"
           onClick={(e) => {
             e.preventDefault();
@@ -64,7 +69,12 @@ const Navbar = () => {
       )}
 
       <Link to="/profile" className={classes.prof}>
-        {auth()}
+        {auth?.username && (
+          <div className={classes.profCont}>
+            <p> {auth?.username}</p>
+            <Avatar src={auth?.image || img} />
+          </div>
+        )}
       </Link>
     </nav>
   );

@@ -1,3 +1,12 @@
 .prof {
-  margin-left: 10px;
+  display: flex;
+  margin-left: 20px;
+  color: #000;
+}
+.profCont {
+  display: flex;
+}
+.profCont p {
+  margin-right: 10px;
+  transform: translateY(5px);
 }

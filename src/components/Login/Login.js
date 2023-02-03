@@ -15,7 +15,6 @@ const Login = () => {
     formState: { errors },
   } = useForm({ mode: "all" });
   const handleOnSubmit = async (data) => {
-    console.log("ddddaaattaa", data);
     try {
       const response = await axios.post(
         "https://blog.kata.academy/api/users/login",
@@ -26,12 +25,16 @@ const Login = () => {
           },
         }
       );
-
+      const { token, username, email, image } = response.data.user;
       signIn({
-        token: response.data.user.token,
+        token,
         expiresIn: "500",
         tokenType: "Bearer",
-        authState: response.data.user.username,
+        authState: {
+          username,
+          email,
+          image,
+        },
       });
       setSuccess(true);
     } catch (err) {

@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { Link, useParams } from "react-router-dom";
-import { Avatar } from "antd";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { Avatar, Modal } from "antd";
+import Cookies from "js-cookie";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import axios from "axios";
+import { useAuthUser } from "react-auth-kit";
 import Spinner from "../Spinner";
 import { getArticleDetails } from "../../features/articles/articlesSlice";
 import ErrorBoundry from "../ErrorBoundry";
@@ -11,6 +15,9 @@ import classes from "./ArticleDetails.module.scss";
 import formataDate from "../../helper/formatDate";
 
 const ArticleDetails = () => {
+  const { confirm } = Modal;
+  const auth = useAuthUser()();
+  const navigate = useNavigate();
   const {
     articleDetails: article,
     detailLoading,
@@ -23,12 +30,43 @@ const ArticleDetails = () => {
   useEffect(() => {
     dispatch(getArticleDetails(slug));
   }, [dispatch]);
+  const deleteArticle = async () => {
+    try {
+      const response = await axios(
+        `https://blog.kata.academy/api/articles/${article.slug}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${Cookies.get("_auth")}`,
+          },
+        }
+      );
+      if (response.status === 204 || response.status === 200) {
+        return navigate("/");
+      }
+      return response.status;
+    } catch (err) {
+      return err;
+    }
+  };
+  const showPromiseConfirm = () => {
+    confirm({
+      title: "Are you sure to delete this article??",
+      icon: <ExclamationCircleFilled />,
+      content: "Really?",
+      onOk() {
+        deleteArticle();
+      },
+      onCancel() {},
+    });
+  };
   if (detailLoading) {
     return <Spinner size="large" />;
   }
   if (hasError) {
     return <ErrorPage />;
   }
+
   return (
     <ErrorBoundry>
       <div className={classes.container}>
@@ -44,7 +82,7 @@ const ArticleDetails = () => {
           </header>
           <div className={classes.tags}>
             {article.tagList.map((tag, inx) => {
-              if (tag.length) {
+              if (tag?.length) {
                 return (
                   <button key={`${tag}${inx}`} type="button">
                     {tag}
@@ -57,6 +95,26 @@ const ArticleDetails = () => {
 
           <p className={classes.text}>{article.description}</p>
           <ReactMarkdown>{article.body}</ReactMarkdown>
+          {auth?.username && auth?.username === article.author.username ? (
+            <div className={classes.editDel}>
+              <Link
+                type="button"
+                to={`/articles/${article.slug}/edit`}
+                className={`btn btn-success ${classes.btnEdit}`}
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                onClick={showPromiseConfirm}
+                className={`btn btn-danger ${classes.btnDelete}`}
+              >
+                delete
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         <div className={classes.avatar}>
           <div className={classes.info}>

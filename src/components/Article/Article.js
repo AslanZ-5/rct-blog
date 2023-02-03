@@ -2,13 +2,13 @@ import React from "react";
 import { Avatar } from "antd";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+
 // import avtr from "./avtr.jpeg";
 import classes from "./Article.module.scss";
 import formataDate from "../../helper/formatDate";
 
 const Article = ({ article }) => {
   const [day, month, year] = formataDate(article.createdAt);
-
   return (
     <div className={classes.container}>
       <div className={classes.article}>
@@ -16,6 +16,7 @@ const Article = ({ article }) => {
           <Link to={`/details/${article.slug}`} className={classes.title}>
             {article.title}
           </Link>
+
           <i className="fa fa-heart-o" />
           <p>{article.favoritesCount}</p>
         </header>
