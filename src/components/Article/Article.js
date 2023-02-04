@@ -5,6 +5,7 @@ import { HeartOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useIsAuthenticated } from "react-auth-kit";
 // import avtr from "./avtr.jpeg";
 import { toggleLikeArticle } from "../../features/articles/articlesSlice";
 import classes from "./Article.module.scss";
@@ -12,7 +13,7 @@ import formataDate from "../../helper/formatDate";
 
 const Article = ({ article }) => {
   const dispatch = useDispatch();
-
+  const isAuth = useIsAuthenticated()();
   const [day, month, year] = formataDate(article.createdAt);
   const likeArticle = async (slug) => {
     const res = await fetch(
@@ -44,14 +45,16 @@ const Article = ({ article }) => {
     return result;
   };
   const likeHandler = (post) => {
-    if (post.favorited) {
-      unLikeArticle(post.slug).then((res) =>
-        dispatch(toggleLikeArticle(res.article))
-      );
-    } else {
-      likeArticle(post.slug).then((res) =>
-        dispatch(toggleLikeArticle(res.article))
-      );
+    if (isAuth) {
+      if (post.favorited) {
+        unLikeArticle(post.slug).then((res) =>
+          dispatch(toggleLikeArticle(res.article))
+        );
+      } else {
+        likeArticle(post.slug).then((res) =>
+          dispatch(toggleLikeArticle(res.article))
+        );
+      }
     }
   };
   return (
@@ -65,6 +68,7 @@ const Article = ({ article }) => {
             className={`${classes.likeIcon} liked`}
             onClick={() => likeHandler(article)}
           />
+
           <p className={classes.likeCount}>{article.favoritesCount}</p>
         </header>
         <div className={classes.tags}>
