@@ -51,7 +51,7 @@ const ArticleForm = ({ article, type }) => {
 
       setSlug(response.data.article.slug);
     } catch (err) {
-      console.log("dd", err);
+      console.log(err);
     }
   };
   const onSubmit = (data) => {

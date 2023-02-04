@@ -15,7 +15,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   // const { username, image } = useAuthUser()();
   const auth = useAuthUser()();
-  console.log(auth);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -25,7 +24,7 @@ const Navbar = () => {
         });
         dispatch(addUser(response.data.user));
       } catch (err) {
-        console.log("dd", err);
+        console.log(err);
       }
     };
     if (isAuthenticated) {

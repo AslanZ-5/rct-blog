@@ -46,6 +46,16 @@ const articlesSlice = createSlice({
     clearDetails: (state) => {
       state.articleDetails = {};
     },
+    toggleLikeArticle: (state, { payload }) => {
+      const index = state.articles.findIndex(
+        (item) => item.slug === payload.slug
+      );
+      state.articles = [
+        ...state.articles.slice(0, index),
+        payload,
+        ...state.articles.slice(index + 1),
+      ];
+    },
   },
   extraReducers: {
     [getArticles.pending]: (state) => {
@@ -76,5 +86,6 @@ const articlesSlice = createSlice({
 });
 
 export { getArticles, getArticleDetails };
-export const { passPage, clearDetails } = articlesSlice.actions;
+export const { passPage, clearDetails, toggleLikeArticle } =
+  articlesSlice.actions;
 export default articlesSlice.reducer;

@@ -40,7 +40,6 @@ const Profile = () => {
   const confirm = watch("repeatPassword");
 
   const handleOnSubmit = (data) => {
-    console.log("ddd$$$$$$", data);
     fetch("https://blog.kata.academy/api/user", {
       method: "PUT",
       headers: {

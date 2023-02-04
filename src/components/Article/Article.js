@@ -1,14 +1,59 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Avatar } from "antd";
+import { HeartOutlined } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-
+import Cookies from "js-cookie";
 // import avtr from "./avtr.jpeg";
+import { toggleLikeArticle } from "../../features/articles/articlesSlice";
 import classes from "./Article.module.scss";
 import formataDate from "../../helper/formatDate";
 
 const Article = ({ article }) => {
+  const dispatch = useDispatch();
+
   const [day, month, year] = formataDate(article.createdAt);
+  const likeArticle = async (slug) => {
+    const res = await fetch(
+      `https://blog.kata.academy/api/articles/${slug}/favorite`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: `Token ${Cookies.get("_auth")}`,
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  };
+
+  const unLikeArticle = async (slug) => {
+    const res = await fetch(
+      `https://blog.kata.academy/api/articles/${slug}/favorite`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: `Token ${Cookies.get("_auth")}`,
+        },
+      }
+    );
+    const result = await res.json();
+    return result;
+  };
+  const likeHandler = (post) => {
+    if (post.favorited) {
+      unLikeArticle(post.slug).then((res) =>
+        dispatch(toggleLikeArticle(res.article))
+      );
+    } else {
+      likeArticle(post.slug).then((res) =>
+        dispatch(toggleLikeArticle(res.article))
+      );
+    }
+  };
   return (
     <div className={classes.container}>
       <div className={classes.article}>
@@ -16,9 +61,11 @@ const Article = ({ article }) => {
           <Link to={`/details/${article.slug}`} className={classes.title}>
             {article.title}
           </Link>
-
-          <i className="fa fa-heart-o" />
-          <p>{article.favoritesCount}</p>
+          <HeartOutlined
+            className={`${classes.likeIcon} liked`}
+            onClick={() => likeHandler(article)}
+          />
+          <p className={classes.likeCount}>{article.favoritesCount}</p>
         </header>
         <div className={classes.tags}>
           {article.tagList.map((tag, inx) => {
