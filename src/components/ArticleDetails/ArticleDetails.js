@@ -13,6 +13,7 @@ import ErrorBoundry from "../ErrorBoundry";
 import ErrorPage from "../../errorPage";
 import classes from "./ArticleDetails.module.scss";
 import formataDate from "../../helper/formatDate";
+import { buildArticleEditPath } from "../../routes";
 
 const ArticleDetails = () => {
   const { confirm } = Modal;
@@ -72,9 +73,8 @@ const ArticleDetails = () => {
       <div className={classes.container}>
         <div className={classes.article}>
           <header className={classes.header}>
-            <Link to={`/details/${article.slug}`} className={classes.title}>
-              {article.title}
-            </Link>
+            <h2>{article.title}</h2>
+
             <div className={classes.favorites}>
               <i className="fa fa-heart-o" />
               <p>{article.favoritesCount}</p>
@@ -99,7 +99,7 @@ const ArticleDetails = () => {
             <div className={classes.editDel}>
               <Link
                 type="button"
-                to={`/articles/${article.slug}/edit`}
+                to={buildArticleEditPath(article.slug)}
                 className={`btn btn-success ${classes.btnEdit}`}
               >
                 Edit

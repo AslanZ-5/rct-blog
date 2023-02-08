@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
+import { useAuthUser } from "react-auth-kit";
+import { useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuthUser } from "react-auth-kit";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { addUser } from "../../features/profile/profileSlice";
 
 import classes from "./Profile.module.scss";
 
@@ -18,6 +20,7 @@ const PWD_REGEX = /.{6,60}/;
 
 const Profile = () => {
   const auth = useAuthUser()();
+  const dispatch = useDispatch();
   const [success, setSuccess] = useState(false);
   const [regError, setRegError] = useState();
   const {
@@ -65,6 +68,7 @@ const Profile = () => {
             image: res.user?.image,
           })
         );
+        dispatch(addUser(res.user));
 
         if (res.user) {
           setSuccess(true);

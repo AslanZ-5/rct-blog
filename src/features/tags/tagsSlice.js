@@ -1,18 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { getArticleTags } from "../../services/articleServer";
 
-const url = "https://blog.kata.academy/api/tags/";
-
-const getTags = createAsyncThunk("tags/getTags", async () => {
-  try {
-    const resp = await axios(url);
-    return resp.data;
-  } catch (error) {
-    throw new Error(error);
-  }
-});
+const getTags = createAsyncThunk("tags/getTags", getArticleTags);
 const initialState = {
   tags: [],
+  hasError: false,
 };
 
 const tagsSlice = createSlice({
@@ -26,6 +18,9 @@ const tagsSlice = createSlice({
   extraReducers: {
     [getTags.fulfilled]: (state, { payload }) => {
       state.tags = payload.tags;
+    },
+    [getTags.rejected]: (state) => {
+      state.hasError = true;
     },
   },
 });

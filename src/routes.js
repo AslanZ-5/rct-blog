@@ -1,0 +1,10 @@
+export const homePath = "/";
+export const ErrorPath = "*";
+export const detailsPath = "/details/:slug";
+export const buildDetailsPath = (slug) => `/details/${slug}`;
+export const newArticlePath = "/new-article";
+export const loginPath = "/sign-in";
+export const registerPath = "/sign-up";
+export const profilePath = "/profile";
+export const articleEditPath = "/articles/:slug/edit";
+export const buildArticleEditPath = (slug) => `/articles/${slug}/edit`;

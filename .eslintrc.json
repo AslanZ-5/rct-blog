@@ -25,6 +25,7 @@
     "no-unneeded-ternary": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "no-nested-ternary": "off"
   }
 }

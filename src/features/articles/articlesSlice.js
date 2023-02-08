@@ -1,29 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import {
+  getArticleList,
+  getSingleArticleDetails,
+} from "../../services/articleServer";
 
-const url = "https://blog.kata.academy/api/articles/";
-
-const getArticles = createAsyncThunk(
-  "articles/getArticles",
-  async (page = 1) => {
-    try {
-      const resp = await axios(`${url}?offset=${(page - 1) * 20}`);
-      return resp.data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-);
+const getArticles = createAsyncThunk("articles/getArticles", getArticleList);
 const getArticleDetails = createAsyncThunk(
   "article/getArticleDetails",
-  async (slug) => {
-    try {
-      const resp = await axios(`${url}${slug}`);
-      return resp.data;
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+  getSingleArticleDetails
 );
 
 const initialState = {
@@ -63,9 +47,8 @@ const articlesSlice = createSlice({
     },
     [getArticles.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.articles = payload.articles;
-      state.totalArticles = payload.articlesCount;
-      // console.log(payload.articles);
+      state.articles = payload?.articles;
+      state.totalArticles = payload?.articlesCount;
     },
     [getArticles.rejected]: (state) => {
       state.loading = false;
@@ -75,7 +58,6 @@ const articlesSlice = createSlice({
     },
     [getArticleDetails.fulfilled]: (state, { payload }) => {
       state.detailLoading = false;
-      // console.log("3333", payload);
       state.articleDetails = payload.article;
     },
     [getArticleDetails.rejected]: (state) => {

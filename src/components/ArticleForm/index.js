@@ -6,10 +6,12 @@ import { Navigate, useParams } from "react-router-dom";
 import { TagsInput } from "react-tag-input-component";
 import PropTypes from "prop-types";
 import classes from "./articleform.module.scss";
+import articleFormValidation from "../../validations/articleFormValidation";
 
 const ArticleForm = ({ article, type }) => {
   const defTags = article ? [...article.tagList] : [];
   const { slug: slugParam } = useParams();
+  const [validationError, setValidationError] = useState(false);
   const [selected, setSelected] = useState(defTags);
   const [slug, setSlug] = useState("");
   const url = !slugParam
@@ -54,8 +56,13 @@ const ArticleForm = ({ article, type }) => {
       console.log(err);
     }
   };
-  const onSubmit = (data) => {
-    createArticle(data);
+  const onSubmit = async (data) => {
+    const isValid = await articleFormValidation.isValid(data);
+    if (isValid) {
+      createArticle(data);
+    } else {
+      setValidationError(true);
+    }
   };
   if (slug) {
     return (
@@ -72,7 +79,9 @@ const ArticleForm = ({ article, type }) => {
         {type === "PUT" ? "Edit" : "Create"} new article
       </h1>
       <form className={classes.createForm} onSubmit={handleSubmit(onSubmit)}>
-        {/* include validation with required or other standard HTML validation rules */}
+        {validationError && (
+          <p style={{ color: "red" }}> Validation Error!!!!</p>
+        )}
         <label className={classes.artLab} htmlFor="title">
           Title
         </label>

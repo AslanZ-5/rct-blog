@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import classes from "./Registration.module.scss";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USER_REGEX = /.{3,20}/;
 const PWD_REGEX = /.{6,60}/;
 
@@ -145,13 +144,9 @@ const Registration = () => {
         <input
           {...register("Email", {
             required: true,
-            pattern: {
-              value: EMAIL_REGEX,
-              message: "email должен быть корректным почтовым адресом",
-            },
           })}
           className={classes.regInput}
-          type="text"
+          type="email"
           id="email"
           placeholder="Email address"
           autoComplete="off"

@@ -12,6 +12,17 @@ import Login from "../Login";
 import Registration from "../Registration";
 import Profile from "../Profile";
 import classes from "./App.module.scss";
+import ErrorPage from "../../errorPage";
+import {
+  detailsPath,
+  ErrorPath,
+  homePath,
+  newArticlePath,
+  loginPath,
+  registerPath,
+  profilePath,
+  articleEditPath,
+} from "../../routes";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,28 +34,29 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<ArticleList />} />
-          <Route path="/details/:slug" element={<ArticleDetails />} />
+          <Route path={ErrorPath} element={<ErrorPage />} />
+          <Route path={homePath} element={<ArticleList />} />
+          <Route path={detailsPath} element={<ArticleDetails />} />
 
           <Route
-            path="/new-article"
+            path={newArticlePath}
             element={
-              <RequireAuth loginPath="/sign-in">
+              <RequireAuth loginPath={loginPath}>
                 <CreateArticle />
               </RequireAuth>
             }
           />
           <Route
-            path="/articles/:slug/edit"
+            path={articleEditPath}
             element={
-              <RequireAuth loginPath="/sign-in">
+              <RequireAuth loginPath={loginPath}>
                 <EditArticle />
               </RequireAuth>
             }
           />
-          <Route path="/sign-up" element={<Registration />} />
-          <Route path="/sign-in" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path={registerPath} element={<Registration />} />
+          <Route path={loginPath} element={<Login />} />
+          <Route path={profilePath} element={<Profile />} />
         </Routes>
       </Router>
     </div>

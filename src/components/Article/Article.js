@@ -1,49 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Avatar } from "antd";
-import { HeartOutlined } from "@ant-design/icons";
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useIsAuthenticated } from "react-auth-kit";
 // import avtr from "./avtr.jpeg";
 import { toggleLikeArticle } from "../../features/articles/articlesSlice";
 import classes from "./Article.module.scss";
 import formataDate from "../../helper/formatDate";
+import { likeArticle, unLikeArticle } from "../../services/articleServer";
+import { buildDetailsPath } from "../../routes";
 
 const Article = ({ article }) => {
   const dispatch = useDispatch();
   const isAuth = useIsAuthenticated()();
   const [day, month, year] = formataDate(article.createdAt);
-  const likeArticle = async (slug) => {
-    const res = await fetch(
-      `https://blog.kata.academy/api/articles/${slug}/favorite`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          Authorization: `Token ${Cookies.get("_auth")}`,
-        },
-      }
-    );
-    const result = await res.json();
-    return result;
-  };
 
-  const unLikeArticle = async (slug) => {
-    const res = await fetch(
-      `https://blog.kata.academy/api/articles/${slug}/favorite`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          Authorization: `Token ${Cookies.get("_auth")}`,
-        },
-      }
-    );
-    const result = await res.json();
-    return result;
-  };
   const likeHandler = (post) => {
     if (isAuth) {
       if (post.favorited) {
@@ -61,13 +34,21 @@ const Article = ({ article }) => {
     <div className={classes.container}>
       <div className={classes.article}>
         <header className={classes.header}>
-          <Link to={`/details/${article.slug}`} className={classes.title}>
+          <Link to={buildDetailsPath(article.slug)} className={classes.title}>
             {article.title}
           </Link>
-          <HeartOutlined
-            className={`${classes.likeIcon} liked`}
-            onClick={() => likeHandler(article)}
-          />
+          {article.favorited ? (
+            <HeartFilled
+              className={`${classes.likeIcon}`}
+              style={{ color: "red" }}
+              onClick={() => likeHandler(article)}
+            />
+          ) : (
+            <HeartOutlined
+              className={`${classes.likeIcon}`}
+              onClick={() => likeHandler(article)}
+            />
+          )}
 
           <p className={classes.likeCount}>{article.favoritesCount}</p>
         </header>
