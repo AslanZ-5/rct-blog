@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
-import { useAuthUser } from "react-auth-kit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -19,7 +18,7 @@ const USER_REGEX = /.{3,20}/;
 const PWD_REGEX = /.{6,60}/;
 
 const Profile = () => {
-  const auth = useAuthUser()();
+  const { user } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const [success, setSuccess] = useState(false);
   const [regError, setRegError] = useState();
@@ -31,9 +30,9 @@ const Profile = () => {
   } = useForm({
     mode: "all",
     defaultValues: {
-      Username: auth?.username,
-      Email: auth?.email,
-      image: auth?.image,
+      Username: user?.username,
+      Email: user?.email,
+      image: user?.image,
     },
   });
 

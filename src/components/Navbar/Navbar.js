@@ -22,8 +22,6 @@ const Navbar = () => {
   const signOut = useSignOut();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
-  // const { username, image } = useAuthUser()();
-  console.log(user);
   useEffect(() => {
     const getUser = async () => {
       try {
